@@ -69,14 +69,6 @@ app.post('/api/persons', (request, response, next) => {
 app.put('/api/persons/:id', (request, response, next) => {
   const body = request.body
 
-  /* findByIdAndUpdate cannot use validation
-  Person.findByIdAndUpdate(request.params.id, person, { new: true})
-    .then(updatedPerson => {
-      response.json(updatedPerson.toJSON())
-    })
-    .catch(error => next(error))
-*/
-
   Person.findOneAndUpdate({ _id: request.params.id }, { number: body.number }, { new: true, runValidators: true })
     .then(updatedPerson => {
       if(updatedPerson) {
